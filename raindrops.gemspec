@@ -21,9 +21,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rails', '~> 4.2.4'
   s.add_dependency 'haml', '~> 4.0.7'
-  #s.add_dependency 'realdebrid', '~> 0.2.0'
-  #s.add_dependency 'http_download'
-  #s.add_dependency 'curb', '~> 0.8.8'
+
   s.add_dependency 'delayed_job_active_record'
   s.add_dependency 'sqlite3', '~> 1.3.11'
 end

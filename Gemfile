@@ -14,6 +14,5 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 
 group :development do
-  gem 'realdebrid', path: '~/ruby/realdebrid'
-  #gem 'http_download', path: '~/ruby/http_download'
+  #gem 'realdebrid', path: '~/ruby/realdebrid'
 end
