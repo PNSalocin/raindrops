@@ -1,0 +1,14 @@
+fr:
+  raindrops:
+
+    global:
+      application_name: "Raindrops"
+
+    activerecord:
+      attributes:
+        raindrops/download:
+          source_url: "URL source"
+          destination_path: "Chemin de destination"
+          file_total_size: "Taille du fichier"
+          file_downloaded_size: "Taille téléchargée"
+          completed: "Fini?"

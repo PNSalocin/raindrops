@@ -19,9 +19,16 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'haml-rails', '~> 0.9'
 
+  # Core
   s.add_dependency 'rails', '~> 4.2.4'
-  s.add_dependency 'haml', '~> 4.0.7'
-
   s.add_dependency 'delayed_job_active_record'
+
+  # DB
   s.add_dependency 'sqlite3', '~> 1.3.11'
+
+  # Vues
+  s.add_dependency 'haml', '~> 4.0.7'
+  s.add_dependency 'jquery-rails', '~> 4.0.5'
+  s.add_dependency 'bootstrap-sass', '~> 3.3.5'
+  s.add_dependency 'sass-rails', '>= 3.2'
 end
