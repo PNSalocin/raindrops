@@ -22,12 +22,15 @@ module Raindrops
         old_percent_downloaded = 0
         puts 'Starting download'
 
+        self.update_attributes! file_total_size: file_size
+
         response.read_body do |chunk|
           bytes_downloaded += chunk.length
           percent_downloaded = (bytes_downloaded * 100) / file_size
 
           if percent_downloaded != old_percent_downloaded
             puts "#{percent_downloaded}/100% downloaded."
+            self.update_attributes! file_downloaded_size: bytes_downloaded
           end
 
           old_percent_downloaded = percent_downloaded
@@ -37,6 +40,12 @@ module Raindrops
         end
         puts 'STOP DOWNLOAD'
       end
+    end
+
+    def progress
+      file_total_size && file_downloaded_size ?
+          file_downloaded_size / file_total_size * 100 :
+          0
     end
 
     private

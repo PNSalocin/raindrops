@@ -5,7 +5,6 @@ fr:
       application_name: "Raindrops"
 
     downloads:
-      progress: "Progression"
       form:
         submit: "Télécharger"
 
@@ -16,4 +15,5 @@ fr:
           destination_path: "Chemin de destination"
           file_total_size: "Taille du fichier"
           file_downloaded_size: "Taille téléchargée"
-          completed: "Fini?"
+          completed: "Fini ?"
+          progress: "Progression"
