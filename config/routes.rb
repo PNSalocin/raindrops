@@ -1,5 +1,7 @@
 Raindrops::Engine.routes.draw do
 
-  resources :downloads, only: [:index, :create, :destroy], :path => '/'
+  root to: 'downloads#index'
+
+  resources :downloads, only: [:index, :create, :destroy]
 
 end

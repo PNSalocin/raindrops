@@ -9,6 +9,10 @@ module Raindrops
     # Affiche la liste des téléchargements en cours
     # Affiche le formulaire de téléchargement
     def index
+      respond_to do |format|
+        format.html
+        format.json
+      end
     end
 
     # POST /
