@@ -1,6 +1,5 @@
 Raindrops::Engine.routes.draw do
 
-  root 'home#index'
-  get '/threads', to: 'home#threads'
+  resources :downloads, only: [:index, :create], :path => '/'
 
 end

@@ -19,8 +19,10 @@
         %td
           = download.destination_path
         %td
-          = download.progress
+          = "#{download.progress} %"
         %td
-          = download.file_total_size
+          = number_to_human_size download.file_total_size
         %td
-          = download.file_downloaded_size
+          = number_to_human_size download.file_downloaded_size
+
+= render partial: 'form'
