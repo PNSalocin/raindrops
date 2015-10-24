@@ -27,6 +27,13 @@ module Raindrops
       render :index
     end
 
+    # DELETE /:id
+    def destroy
+      @download = Raindrops::Download.find params[:id]
+      @download.destroy!
+      redirect_to action: :index, status: 303
+    end
+
     private
 
     def download_params

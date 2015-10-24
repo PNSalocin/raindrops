@@ -34,11 +34,12 @@ module Raindrops
           end
 
           old_percent_downloaded = percent_downloaded
-
-
           file.write chunk
         end
+
         puts 'STOP DOWNLOAD'
+        self.update_attributes! completed: true
+
       end
     end
 

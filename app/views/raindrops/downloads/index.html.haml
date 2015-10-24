@@ -11,9 +11,11 @@
         = t('raindrops.activerecord.attributes.raindrops/download.file_total_size')
       %th
         = t('raindrops.activerecord.attributes.raindrops/download.file_downloaded_size')
+      %th
+        = t('raindrops.global.actions')
   %tbody
     - @downloads.each do |download|
-      %tr
+      %tr{class: ('success' if download.completed?)}
         %td
           = download.source_url
         %td
@@ -24,5 +26,10 @@
           = number_to_human_size download.file_total_size
         %td
           = number_to_human_size download.file_downloaded_size
+        %td
+          - if download.completed?
+            = link_to download_path(download), method: :delete, class: 'btn btn-xs btn-primary' do
+              %span.glyphicon.glyphicon-eject
+              = t('raindrops.global.remove')
 
 = render partial: 'form'

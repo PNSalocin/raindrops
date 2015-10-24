@@ -3,8 +3,13 @@ fr:
 
     global:
       application_name: "Raindrops"
+      actions: "Actions"
+      remove: "Retirer"
+      stop: "Stopper"
 
     downloads:
+      index:
+        confirm_delete: "Êtes-vous sûr de vouloir annuler le téléchargement ?"
       form:
         submit: "Télécharger"
 
