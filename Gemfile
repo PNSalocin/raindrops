@@ -14,5 +14,4 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 
 group :development do
-  #gem 'realdebrid', path: '~/ruby/realdebrid'
 end
