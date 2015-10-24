@@ -1,13 +1,26 @@
 %table.table.table-striped.table-condensed
   %thead
-    %th
-      %td
+    %tr
+      %th
         = t('raindrops.activerecord.attributes.raindrops/download.source_url')
-      %td
+      %th
         = t('raindrops.activerecord.attributes.raindrops/download.destination_path')
-      %td
+      %th
+        = t('raindrops.activerecord.attributes.raindrops/download.progress')
+      %th
         = t('raindrops.activerecord.attributes.raindrops/download.file_total_size')
-      %td
+      %th
         = t('raindrops.activerecord.attributes.raindrops/download.file_downloaded_size')
-      %td
-        = t('raindrops.activerecord.attributes.raindrops/download.completed')
+  %tbody
+    - @downloads.each do |download|
+      %tr
+        %td
+          = download.source_url
+        %td
+          = download.destination_path
+        %td
+          = download.progress
+        %td
+          = download.file_total_size
+        %td
+          = download.file_downloaded_size
