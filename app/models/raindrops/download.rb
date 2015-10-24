@@ -1,6 +1,10 @@
 module Raindrops
   class Download < ActiveRecord::Base
 
+    validates :source_url, presence: true
+    validates :source_url, format: { with: URI.regexp }, if: Proc.new { |a| a.source_url.present? }
+    validates :destination_path, presence: true
+
     def start
       require 'net/http'
       Net::HTTP.new(source_uri.host, source_uri.port).request_get(source_uri.path) do |response|
