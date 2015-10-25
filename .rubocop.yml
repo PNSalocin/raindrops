@@ -1,0 +1,30 @@
+Metrics/LineLength:
+  Max: 120
+
+Metrics/AbcSize:
+  Max: 18
+
+Metrics/MethodLength:
+  Max: 15
+
+# For tests
+Style/BlockDelimiters:
+  Enabled: false
+
+# Stupid frenchie
+Style/AsciiComments:
+  Enabled: false
+
+Style/EmptyLinesAroundClassBody:
+  Enabled: false
+
+Style/EmptyLinesAroundModuleBody:
+  Enabled: false
+
+AllCops:
+  Exclude:
+    - 'bin/*'
+    - 'spec/spec_helper.rb'
+    - 'lib/realdebrid/version.rb'
+    - 'Rakefile'
+    - 'raindrops.gemspec'
