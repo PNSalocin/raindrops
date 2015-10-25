@@ -1,9 +1,0 @@
-  [1m[36m (40.2ms)[0m  [1mCREATE TABLE "delayed_jobs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "priority" integer DEFAULT 0 NOT NULL, "attempts" integer DEFAULT 0 NOT NULL, "handler" text NOT NULL, "last_error" text, "run_at" datetime, "locked_at" datetime, "failed_at" datetime, "locked_by" varchar, "queue" varchar, "created_at" datetime, "updated_at" datetime) [0m
-  [1m[35m (0.1ms)[0m  select sqlite_version(*)
-  [1m[36m (60.6ms)[0m  [1mCREATE  INDEX "delayed_jobs_priority" ON "delayed_jobs" ("priority", "run_at")[0m
-  [1m[35m (80.9ms)[0m  CREATE TABLE "raindrops_downloads" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "source_url" varchar(255) NOT NULL, "destination_path" varchar(255) NOT NULL, "file_total_size" integer, "file_downloaded_size" integer, "completed" boolean DEFAULT 'f', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
-  [1m[36m (30.2ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
-  [1m[35m (47.2ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
-  [1m[36m (0.2ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
-  [1m[35m (48.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20151018085430')
-  [1m[36m (47.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20151018081726')[0m
