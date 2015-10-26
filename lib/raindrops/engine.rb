@@ -1,5 +1,5 @@
-module Raindrops
-  class Engine < ::Rails::Engine
+module Raindrops #:nodoc:
+  class Engine < ::Rails::Engine #:nodoc:
     isolate_namespace Raindrops
 
     initializer 'raindrops' do |app|

@@ -1,4 +1,5 @@
 module Raindrops
+  # Modèle identifiant un téléchargement planifié, en cours ou terminé
   class Download < ActiveRecord::Base
 
     validates :source_url, presence: true
@@ -17,7 +18,7 @@ module Raindrops
     # *Params* :
     #   - _Integer_ +bytes_downloaded+ octets téléchargés
     def bytes_downloaded=(bytes_downloaded)
-      Rails.cache.write "download[#{self.id}][bytes_downloaded]", bytes_downloaded
+      Rails.cache.write "download[#{id}][bytes_downloaded]", bytes_downloaded
     end
 
     # Retourne le nombre d'octets téléchargés du fichier
@@ -25,7 +26,7 @@ module Raindrops
     # *Returns* :
     #   - _Integer_
     def bytes_downloaded
-      Rails.cache.read "download[#{self.id}][bytes_downloaded]"
+      Rails.cache.read "download[#{id}][bytes_downloaded]"
     end
 
     # Retourne le pourcentage actuel de progression de téléchargement du fichier
@@ -39,37 +40,32 @@ module Raindrops
     # Démarre le téléchargement
     def start
       require 'net/http'
+
+      # Requête de base de récupération du fichier
       Net::HTTP.new(source_uri.host, source_uri.port).request_get(source_uri.path) do |response|
         puts "File found @#{source_uri}." if verbose
-        file_size = get_and_update_file_size response
-        return unless file = open_destination_file
+
+        get_and_update_file_size response
+
+        # Tentative d'ouverture du fichier de destination en vue d'ecrire les chunks reçus
+        file = open_destination_file
+        return nil unless file
+
         self.update_attributes! status: Raindrops::Download.statuses[:downloading]
 
+        puts 'Starting download' if verbose
         self.bytes_downloaded = 0
-        #old_percent_downloaded = 0
-        puts 'Starting download'
 
+        # Récupération des données du fichier par chunks
         response.read_body do |chunk|
           self.bytes_downloaded += chunk.length
-
-=begin
-          if percent_downloaded != old_percent_downloaded
-            puts "#{percent_downloaded}/100% downloaded."
-            self.update_attributes! file_downloaded_size: bytes_downloaded
-          end
-=end
-
-          #old_percent_downloaded = percent_downloaded
-
           file.write chunk
         end
 
-        puts 'STOP DOWNLOAD'
         self.update_attributes! status: Raindrops::Download.statuses[:completed]
+        close_destination_file file
       end
     end
-
-
 
     private
 
@@ -116,9 +112,10 @@ module Raindrops
       end
     end
 
-
-    def close_file
-
+    # Ferme le fichier de destination
+    def close_destination_file(file)
+      file.close
+      puts 'Destination file closed' if verbose
     end
   end
 end

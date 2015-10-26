@@ -2,10 +2,10 @@ Metrics/LineLength:
   Max: 120
 
 Metrics/AbcSize:
-  Max: 18
+  Max: 30
 
 Metrics/MethodLength:
-  Max: 15
+  Max: 20
 
 # For tests
 Style/BlockDelimiters:
@@ -28,3 +28,5 @@ AllCops:
     - 'lib/realdebrid/version.rb'
     - 'Rakefile'
     - 'raindrops.gemspec'
+    - 'db/migrate/*'
+    - 'spec/dummy/**/*'

@@ -1,5 +1,5 @@
-class CreateDelayedJobs < ActiveRecord::Migration
-  def self.up
+class CreateDelayedJobs < ActiveRecord::Migration #:nodoc:
+  def self.up #:nodoc:
     create_table :delayed_jobs, force: true do |table|
       table.integer :priority, default: 0, null: false # Allows some jobs to jump to the front of the queue
       table.integer :attempts, default: 0, null: false # Provides for retries, but still fail eventually.
@@ -16,7 +16,7 @@ class CreateDelayedJobs < ActiveRecord::Migration
     add_index :delayed_jobs, [:priority, :run_at], name: "delayed_jobs_priority"
   end
 
-  def self.down
+  def self.down #:nodoc:
     drop_table :delayed_jobs
   end
 end

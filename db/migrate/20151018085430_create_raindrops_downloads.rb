@@ -1,5 +1,5 @@
-class CreateRaindropsDownloads < ActiveRecord::Migration
-  def change
+class CreateRaindropsDownloads < ActiveRecord::Migration #:nodoc:
+  def change #:nodoc:
     create_table :raindrops_downloads do |t|
       t.string :source_url, limit: 255, null: false
       t.string :destination_path, limit: 255, null: false
