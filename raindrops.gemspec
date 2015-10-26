@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'haml-rails', '~> 0.9'
   s.add_development_dependency 'rspec'
+  s.add_development_dependency 'coveralls'
 
   # Core
   s.add_dependency 'rails', '~> 4.2.4'
