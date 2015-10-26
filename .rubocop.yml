@@ -18,9 +18,6 @@ Style/AsciiComments:
 Style/EmptyLinesAroundClassBody:
   Enabled: false
 
-Style/EmptyLinesAroundModuleBody:
-  Enabled: false
-
 AllCops:
   Exclude:
     - 'bin/*'
@@ -30,3 +27,4 @@ AllCops:
     - 'raindrops.gemspec'
     - 'db/migrate/*'
     - 'spec/dummy/**/*'
+    - 'vendor/**/*'
