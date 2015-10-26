@@ -23,9 +23,9 @@
         %td
           = "#{download.progress} %"
         %td
-          = number_to_human_size download.file_total_size
+          = number_to_human_size download.file_size
         %td
-          = number_to_human_size download.file_downloaded_size
+          = number_to_human_size download.bytes_downloaded
         %td
           - if download.completed?
             = link_to download_path(download), method: :delete, class: 'btn btn-xs btn-primary' do
