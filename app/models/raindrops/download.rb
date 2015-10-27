@@ -8,25 +8,16 @@ module Raindrops
 
     after_initialize :default_values
 
-    enum status: { unprocessed: 0, downloading: 10, completed: 20,
-                   error_opening_file: -10 }
+    enum status: { unprocessed: 0, downloading: 10, completed: 20, error_opening_file: -10 }
 
     attr_accessor :verbose
-
-    # Assigne le nombre d'octets téléchargés du fichier
-    #
-    # *Params* :
-    #   - _Integer_ +bytes_downloaded+ octets téléchargés
-    def bytes_downloaded=(bytes_downloaded)
-      Rails.cache.write "download[#{id}][bytes_downloaded]", bytes_downloaded
-    end
 
     # Retourne le nombre d'octets téléchargés du fichier
     #
     # *Returns* :
     #   - _Integer_
     def bytes_downloaded
-      Rails.cache.read "download[#{id}][bytes_downloaded]"
+      File.exist?(destination_path) ? File.size(destination_path) : 0
     end
 
     # Retourne le pourcentage actuel de progression de téléchargement du fichier
@@ -52,13 +43,10 @@ module Raindrops
         return nil unless file
 
         self.update_attributes! status: Raindrops::Download.statuses[:downloading]
-
         puts 'Starting download' if verbose
-        self.bytes_downloaded = 0
 
         # Récupération des données du fichier par chunks
         response.read_body do |chunk|
-          self.bytes_downloaded += chunk.length
           file.write chunk
         end
 

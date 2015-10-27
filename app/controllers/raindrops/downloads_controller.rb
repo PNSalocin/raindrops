@@ -1,12 +1,13 @@
 module Raindrops
   # Controlleur de gestion des téléchargements
   class DownloadsController < ApplicationController
+    include ActionController::Live
 
     before_action :set_download_by_id, only: [:destroy]
     before_action :set_download, only: [:index, :create]
     before_action :set_downloads, only: [:index, :create]
 
-    # GET /
+    # GET /downloads
     #
     # Affiche la liste des téléchargements en cours
     # Affiche le formulaire de téléchargement
@@ -17,7 +18,7 @@ module Raindrops
       end
     end
 
-    # POST /
+    # POST /downloads
     #
     # Ajoute un téléchargement
     def create
@@ -27,16 +28,42 @@ module Raindrops
         download = Raindrops::Download.new source_url: @download.source_url,
                                            destination_path: @download.destination_path
         download.save
-        download.start
+        download.delay.start
       end
 
       render :index
     end
 
-    # DELETE /:id
+    # DELETE /download/:id
+    #
+    # Efface un téléchargement
     def destroy
       @download.destroy!
       redirect_to action: :index, status: 303
+    end
+
+    # :GET /downloads/progress
+    #
+    # Retourne la progression des téléchargements
+    def progress
+      response.headers['Content-Type'] = 'text/event-stream'
+      sse = SSE.new(response.stream, retry: 3, event: 'downloads-progress')
+
+      begin
+        loop do
+          downloads = Raindrops::Download.where status: Raindrops::Download.statuses[:downloading]
+
+          10.times do
+            downloads.each do |download|
+              sse.write id: download.id, progress: download.progress
+            end
+
+            sleep 1
+          end
+        end
+      ensure
+        sse.close
+      end
     end
 
     private
