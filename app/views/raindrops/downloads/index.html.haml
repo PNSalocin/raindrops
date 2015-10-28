@@ -15,13 +15,16 @@
         = t('raindrops.global.actions')
   %tbody
     - @downloads.each do |download|
-      %tr{class: ('success' if download.completed?)}
+      %tr{class: ('success' if download.completed?), id: "download-#{download.id}"}
         %td
           = download.source_url
         %td
           = download.destination_path
         %td
-          = "#{download.progress} %"
+          .progress
+            .progress-bar.progress-bar-striped.active{style: "width: #{download.progress}%;"}
+              %span.sr-conly
+                = "#{download.progress}%"
         %td
           = number_to_human_size download.file_size
         %td
