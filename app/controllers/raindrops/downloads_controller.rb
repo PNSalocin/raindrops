@@ -42,28 +42,15 @@ module Raindrops
       redirect_to action: :index, status: 303
     end
 
-    # :GET /downloads/progress
+    # :GET /downloads/events
     #
     # Retourne la progression des téléchargements
-    def progress
+    def events
       response.headers['Content-Type'] = 'text/event-stream'
-      sse = SSE.new(response.stream, retry: 3, event: 'downloads-progress')
+      sse_progress = SSE.new response.stream, retry: 3, event: 'download-progress'
+      sse_new = SSE.new response.stream, retry: 3, event: 'download-new'
 
-      begin
-        loop do
-          downloads = Raindrops::Download.where status: Raindrops::Download.statuses[:downloading]
-
-          10.times do
-            downloads.each do |download|
-              sse.write id: download.id, progress: download.progress
-            end
-
-            sleep 1
-          end
-        end
-      ensure
-        sse.close
-      end
+      Download.send_events sse_progress, sse_new
     end
 
     private

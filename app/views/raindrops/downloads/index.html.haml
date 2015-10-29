@@ -35,4 +35,16 @@
               %span.glyphicon.glyphicon-eject
               = t('raindrops.global.remove')
 
+    %template.download-row
+      %tr
+        %td
+        %td
+        %td
+          .progress
+            .progress-bar.progress-bar-striped.active{style: 'width: 0%;'}
+              %span.sr-conly= '0%'
+        %td
+        %td
+        %td
+
 = render partial: 'form'
