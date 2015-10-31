@@ -47,11 +47,16 @@ module Raindrops
     # Retourne la progression des téléchargements
     def events
       response.headers['Content-Type'] = 'text/event-stream'
-      sse_progress = SSE.new response.stream, retry: 3, event: 'download-progress'
-      sse_created = SSE.new response.stream, retry: 3, event: 'download-created'
+
+      # On register tout les canaux providés par le manager
+      sse_progress  = SSE.new response.stream, retry: 3, event: 'download-progress'
+      sse_created   = SSE.new response.stream, retry: 3, event: 'download-created'
       sse_destroyed = SSE.new response.stream, retry: 3, event: 'download-destroyed'
 
-      Download.send_events sse_progress, sse_created, sse_destroyed
+      # Abonnement aux canaux et envoi des notifications
+      download_manager = Raindrops::DownloadManager.instance
+      download_manager.send_events progress: sse_progress, created: sse_created,
+                                   destroyed: sse_destroyed
     end
 
     private

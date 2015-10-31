@@ -55,48 +55,6 @@ module Raindrops
       end
     end
 
-    # BOUCLE INFINIE
-    # Gestion de évènements liés aux téléchargements (progression, ajout)
-    #
-    # *Params* :
-    # - _SSE_ +sse_progress+ Canal SSE pour la progression
-    # - _SSE_ +sse_created+ Canal SSE pour les nouveaux téléchargements
-    # - _SSE_ +sse_create+ Canal SSE pour les téléchargements supprimés
-    def self.send_events(sse_progress, sse_created, sse_destroyed)
-      downloads = Raindrops::Download.all.index_by(&:id)
-      old_downloads = downloads
-
-      loop do
-        # Récupération des téléchargement créés/supprimés en comparant
-        # les anciens téléchargements aux téléchargements actuels
-        created_downloads = downloads.except(*old_downloads.keys)
-        destroyed_downloads = old_downloads.except(*downloads.keys)
-
-        created_downloads.each do |_created_download_id, created_download|
-          sse_created.write created_download.attributes
-        end
-
-        destroyed_downloads.each do |destroyed_download_id|
-          sse_destroyed.write id: destroyed_download_id
-        end
-
-        10.times do
-          downloads.each do |_download_id, download|
-            if download.status == Raindrops::Download.statuses[:downloading]
-              sse_progress.write id: download.id, progress: download.progress
-            end
-          end
-          sleep 1
-        end
-
-        # Un clean cache est nécessaire ici, sinon rails continue a resservir les résultats du cache,
-        # et donc ne voit pas les nouveaux téléchargements
-        ActiveRecord::Base.connection.query_cache.clear
-        old_downloads = downloads
-        downloads = Raindrops::Download.all.index_by(&:id)
-      end
-    end
-
     private
 
     # Assigne les valeurs par défaut au modèle
