@@ -4,6 +4,7 @@ module Raindrops
   # Modèle identifiant un gestionnaire de téléchargements
   class DownloadManager
     include Singleton
+    include ActionView::Helpers
 
     # BOUCLE INFINIE
     # Gestion de évènements liés aux téléchargements (progression, ajout)
@@ -50,9 +51,10 @@ module Raindrops
     # - _Array_ +old_downloads+ : Ancien état des téléchargements
     # - _SSE_ +sse_created+ : Canal SSE des notifications de création
     def send_created_events(downloads, old_downloads, sse_created)
-      created_downloads = downloads.except(*old_downloads.keys)
-      created_downloads.each do |_created_download_id, created_download|
-        sse_created.write created_download.attributes
+      downloads.except(*old_downloads.keys).each do |_created_download_id, created_download|
+        extra_attributes = { file_size_human: number_to_human_size(created_download.file_size) }
+        attributes = created_download.attributes.merge extra_attributes
+        sse_created.write attributes
       end
     end
 
@@ -63,8 +65,7 @@ module Raindrops
     # - _Array_ +old_downloads+ : Ancien état des téléchargements
     # - _SSE_ +sse_destroyed+ : Canal SSE des notifications de suppression
     def send_destroyed_events(downloads, old_downloads, sse_destroyed)
-      destroyed_downloads = old_downloads.except(*downloads.keys)
-      destroyed_downloads.each do |destroyed_download_id|
+      old_downloads.except(*downloads.keys).each do |destroyed_download_id, _destroyed_download|
         sse_destroyed.write id: destroyed_download_id
       end
     end
@@ -75,10 +76,11 @@ module Raindrops
     # - _Download_ +download+ : Téléchargement dont la progression est à notifier
     # - _SSE_ +sse_progress+ : Canal SSE des notifications de progression
     def send_progress_events(download, sse_progress)
-      return unless download.status == Raindrops::Download.statuses[:downloading]
+      return unless download.downloading?
 
-      sse_progress.write id: download.id, progress: download.progress
-      sse_progress.write id: download.id, progress: download.progress
+      sse_progress.write id: download.id, progress: download.progress, bytes_downloaded: download.bytes_downloaded,
+                         bytes_downloaded_human: number_to_human_size(download.bytes_downloaded),
+                         file_size_human: number_to_human_size(download.file_size)
     end
 
     # Envoie les évènements associés à la complétion d'un téléchargement
