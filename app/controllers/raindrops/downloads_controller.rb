@@ -52,11 +52,12 @@ module Raindrops
       sse_progress  = SSE.new response.stream, retry: 3, event: 'download-progress'
       sse_created   = SSE.new response.stream, retry: 3, event: 'download-created'
       sse_destroyed = SSE.new response.stream, retry: 3, event: 'download-destroyed'
+      sse_completed = SSE.new response.stream, retry: 3, event: 'download-completed'
 
       # Abonnement aux canaux et envoi des notifications
       download_manager = Raindrops::DownloadManager.instance
       download_manager.send_events progress: sse_progress, created: sse_created,
-                                   destroyed: sse_destroyed
+                                   destroyed: sse_destroyed, completed: sse_completed
     end
 
     private
