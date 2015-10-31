@@ -7,9 +7,6 @@ Metrics/AbcSize:
 Metrics/MethodLength:
   Max: 20
 
-Style/CyclomaticComplexity:
-  Max: 8
-
 # For tests
 Style/BlockDelimiters:
   Enabled: false

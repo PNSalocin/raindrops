@@ -1,2 +1,14 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+table.downloads {
+  th.progress {
+    width: 40%;
+  }
+  td {
+    div.progress {
+      margin-bottom: 0px;
+    }
+  }
+}
+

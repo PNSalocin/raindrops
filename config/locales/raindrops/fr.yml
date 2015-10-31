@@ -10,6 +10,8 @@ fr:
     downloads:
       index:
         confirm_delete: "Êtes-vous sûr de vouloir annuler le téléchargement ?"
+        download_file_name: "Nom du fichier"
+        speed: "Vitesse"
       form:
         submit: "Télécharger"
 
@@ -18,7 +20,7 @@ fr:
         raindrops/download:
           source_url: "URL source"
           destination_path: "Chemin de destination"
-          file_total_size: "Taille du fichier"
-          file_downloaded_size: "Taille téléchargée"
+          file_size: "Taille du fichier"
           completed: "Fini ?"
           progress: "Progression"
+          status: "Statut"
