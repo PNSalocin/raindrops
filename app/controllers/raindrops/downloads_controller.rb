@@ -48,9 +48,10 @@ module Raindrops
     def events
       response.headers['Content-Type'] = 'text/event-stream'
       sse_progress = SSE.new response.stream, retry: 3, event: 'download-progress'
-      sse_new = SSE.new response.stream, retry: 3, event: 'download-new'
+      sse_created = SSE.new response.stream, retry: 3, event: 'download-created'
+      sse_destroyed = SSE.new response.stream, retry: 3, event: 'download-destroyed'
 
-      Download.send_events sse_progress, sse_new
+      Download.send_events sse_progress, sse_created, sse_destroyed
     end
 
     private
