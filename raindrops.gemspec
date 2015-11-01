@@ -24,7 +24,8 @@ Gem::Specification.new do |s|
 
   # Core
   s.add_dependency 'rails', '~> 4.2.4'
-  s.add_dependency 'delayed_job_active_record'
+  s.add_dependency 'delayed_job_active_record', '~> 4.1.0'
+  s.add_dependency 'puma', '~> 2.14.0'
 
   # DB
   s.add_dependency 'sqlite3', '~> 1.3.11'

@@ -6,7 +6,7 @@ module Raindrops
     before_action :set_download, only: [:index, :create]
     before_action :set_downloads, only: [:index, :create]
 
-    # GET /
+    # GET /downloads
     #
     # Affiche la liste des téléchargements en cours
     # Affiche le formulaire de téléchargement
@@ -17,7 +17,7 @@ module Raindrops
       end
     end
 
-    # POST /
+    # POST /downloads
     #
     # Ajoute un téléchargement
     def create
@@ -27,13 +27,15 @@ module Raindrops
         download = Raindrops::Download.new source_url: @download.source_url,
                                            destination_path: @download.destination_path
         download.save
-        download.start
+        download.delay.start
       end
 
       render :index
     end
 
-    # DELETE /:id
+    # DELETE /download/:id
+    #
+    # Efface un téléchargement
     def destroy
       @download.destroy!
       redirect_to action: :index, status: 303

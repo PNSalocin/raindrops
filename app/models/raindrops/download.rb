@@ -8,31 +8,22 @@ module Raindrops
 
     after_initialize :default_values
 
-    enum status: { unprocessed: 0, downloading: 10, completed: 20,
-                   error_opening_file: -10 }
+    enum status: { unprocessed: 0, downloading: 10, completed: 20, error_opening_file: -10 }
 
     attr_accessor :verbose
-
-    # Assigne le nombre d'octets téléchargés du fichier
-    #
-    # *Params* :
-    #   - _Integer_ +bytes_downloaded+ octets téléchargés
-    def bytes_downloaded=(bytes_downloaded)
-      Rails.cache.write "download[#{id}][bytes_downloaded]", bytes_downloaded
-    end
 
     # Retourne le nombre d'octets téléchargés du fichier
     #
     # *Returns* :
-    #   - _Integer_
+    # - _Integer_
     def bytes_downloaded
-      Rails.cache.read "download[#{id}][bytes_downloaded]"
+      File.exist?(destination_path) ? File.size(destination_path) : 0
     end
 
     # Retourne le pourcentage actuel de progression de téléchargement du fichier
     #
     # *Returns* :
-    #   - _Integer_
+    # _Integer_
     def progress
       (bytes_downloaded.to_f / file_size.to_f * 100).round 2
     end
@@ -52,13 +43,10 @@ module Raindrops
         return nil unless file
 
         self.update_attributes! status: Raindrops::Download.statuses[:downloading]
-
         puts 'Starting download' if verbose
-        self.bytes_downloaded = 0
 
         # Récupération des données du fichier par chunks
         response.read_body do |chunk|
-          self.bytes_downloaded += chunk.length
           file.write chunk
         end
 
@@ -77,9 +65,9 @@ module Raindrops
     # Récupère la taille du fichier à télécharger par la réponse, met à jour le modèle et retourne cette taille
     #
     # *Params* :
-    #   - _Hash_ +response+ Réponse HTTP
+    # - _Hash_ +response+ Réponse HTTP
     # *Returns* :
-    #   - _Integer_ : Taille en octets
+    # - _Integer_ : Taille en octets
     def get_and_update_file_size(response)
       file_size = response.header['Content-Length'].to_i
       puts "File size: #{file_size}." if verbose
@@ -90,7 +78,7 @@ module Raindrops
     # Retourne un objet URI correspondant à l'url source
     #
     # *Returns* :
-    #   - _URI_
+    # - _URI_
     def source_uri
       @source_uri = URI(source_url) unless @source_uri
       @source_uri
@@ -99,7 +87,7 @@ module Raindrops
     # Tente d'ouvrir le fichier de destination
     #
     # *Returns* :
-    #   - _File|false_ Le fichier de destination si ok, false dans le cas contraire
+    # - _File|false_ Le fichier de destination si ok, false dans le cas contraire
     def open_destination_file
       puts "Trying to open destination file @#{destination_path}." if verbose
       begin
