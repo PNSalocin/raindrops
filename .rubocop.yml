@@ -21,6 +21,7 @@ Style/EmptyLinesAroundClassBody:
 AllCops:
   Exclude:
     - 'bin/*'
+    - 'spec/rails_helper.rb'
     - 'spec/spec_helper.rb'
     - 'lib/realdebrid/version.rb'
     - 'Rakefile'

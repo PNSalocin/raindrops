@@ -18,10 +18,13 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
 
   s.add_development_dependency 'haml-rails', '~> 0.9'
-  s.add_development_dependency 'rspec'
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'yard'
+
+  s.add_development_dependency 'rspec-rails'
+  s.add_development_dependency 'capybara'
+  s.add_development_dependency 'factory_girl_rails'
 
   # Core
   s.add_dependency 'rails', '~> 4.2.4'

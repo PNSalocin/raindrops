@@ -1,11 +1,11 @@
 .yardoc/
 .idea/
-
 doc/
+coverage/
 
+spec/dummy/tmp/
 spec/dummy/db/*.sqlite3
 spec/dummy/db/*.sqlite3-journal
-spec/dummy/tmp/
 spec/dummy/.sass-cache
 
 *.log
