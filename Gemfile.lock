@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    raindrops (0.0.0dev)
+    raindrops (0.0.2dev)
       bootstrap-sass (~> 3.3.5)
       delayed_job_active_record (~> 4.1.0)
       haml (~> 4.0.7)
@@ -200,6 +200,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
+    yard (0.8.7.6)
 
 PLATFORMS
   ruby
@@ -210,6 +211,7 @@ DEPENDENCIES
   raindrops!
   rspec
   rubocop
+  yard
 
 BUNDLED WITH
    1.10.6

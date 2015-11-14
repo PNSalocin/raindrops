@@ -13,3 +13,8 @@ require 'rspec/core/rake_task'
 desc "Run all specs in spec directory (excluding plugin specs)"
 RSpec::Core::RakeTask.new(:spec => 'app:db:test:prepare')
 task :default => :spec
+
+YARD::Rake::YardocTask.new do |t|
+  t.options += ['--tag', 'route:"ROUTE"']
+  t.stats_options = ['--list-undoc']
+end

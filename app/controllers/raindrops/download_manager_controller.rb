@@ -3,9 +3,9 @@ module Raindrops
   class DownloadManagerController < ApplicationController
     include ActionController::Live
 
-    # :GET /downloads/events
+    # Envoie les différentes notifications associées aux téléchargements.
     #
-    # Envoie les différentes notifications associées aux téléchargements
+    # @route /downloads/events
     def events
       response.headers['Content-Type'] = 'text/event-stream'
 

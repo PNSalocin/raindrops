@@ -6,10 +6,9 @@ module Raindrops
     before_action :set_download, only: [:index, :create]
     before_action :set_downloads, only: [:index, :create]
 
-    # GET /downloads
+    # Affiche la liste des téléchargements en cours, ainsi que le formulaire de téléchargement.
     #
-    # Affiche la liste des téléchargements en cours
-    # Affiche le formulaire de téléchargement
+    # @route [GET] /downloads
     def index
       respond_to do |format|
         format.html
@@ -17,11 +16,11 @@ module Raindrops
       end
     end
 
-    # POST /downloads
+    # Ajoute un téléchargement.
     #
-    # Ajoute un téléchargement
+    # @route [POST] /downloads
     def create
-      # http://ipv4.download.thinkbroadband.com/50MB.zip
+      # @todo Retirer cette constante en dur
       @download.destination_path = "/home/nicolas/Bureau/#{SecureRandom.hex}.zip"
       if @download.valid?
         download = Raindrops::Download.new source_url: @download.source_url,
@@ -33,9 +32,9 @@ module Raindrops
       render :index
     end
 
-    # DELETE /download/:id
-    #
     # Efface un téléchargement
+    #
+    # @route [DELETE] /download/:id
     def destroy
       @download.destroy!
       redirect_to action: :index, status: 303

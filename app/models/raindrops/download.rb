@@ -1,5 +1,5 @@
 module Raindrops
-  # Modèle identifiant un téléchargement planifié, en cours ou terminé
+  # Modèle identifiant un téléchargement planifié, en cours ou terminé.
   class Download < ActiveRecord::Base
 
     validates :source_url, presence: true
@@ -12,23 +12,21 @@ module Raindrops
 
     attr_accessor :verbose
 
-    # Retourne le nombre d'octets téléchargés du fichier
+    # Retourne le nombre d'octets téléchargés du fichier.
     #
-    # *Returns* :
-    # - _Integer_
+    # @return [Integer]
     def bytes_downloaded
       File.exist?(destination_path) ? File.size(destination_path) : 0
     end
 
-    # Retourne le pourcentage actuel de progression de téléchargement du fichier
+    # Retourne le pourcentage actuel de progression de téléchargement du fichier.
     #
-    # *Returns* :
-    # _Integer_
+    # @return [Integer]
     def progress
       (bytes_downloaded.to_f / file_size.to_f * 100).round 2
     end
 
-    # Démarre le téléchargement
+    # Démarre le téléchargement.
     def start
       require 'net/http'
 
@@ -57,17 +55,15 @@ module Raindrops
 
     private
 
-    # Assigne les valeurs par défaut au modèle
+    # Assigne les valeurs par défaut au modèle.
     def default_values
       self.verbose ||= true
     end
 
-    # Récupère la taille du fichier à télécharger par la réponse, met à jour le modèle et retourne cette taille
+    # Récupère la taille du fichier à télécharger par la réponse, met à jour le modèle et retourne cette taille.
     #
-    # *Params* :
-    # - _Hash_ +response+ Réponse HTTP
-    # *Returns* :
-    # - _Integer_ : Taille en octets
+    # @param [Hash] response Réponse HTTP
+    # @return [Integer]
     def get_and_update_file_size(response)
       file_size = response.header['Content-Length'].to_i
       puts "File size: #{file_size}." if verbose
@@ -75,19 +71,17 @@ module Raindrops
       file_size
     end
 
-    # Retourne un objet URI correspondant à l'url source
+    # Retourne un objet URI correspondant à l'url source.
     #
-    # *Returns* :
-    # - _URI_
+    # @return [URI]
     def source_uri
       @source_uri = URI(source_url) unless @source_uri
       @source_uri
     end
 
-    # Tente d'ouvrir le fichier de destination
+    # Tente d'ouvrir le fichier de destination.
     #
-    # *Returns* :
-    # - _File|false_ Le fichier de destination si ok, false dans le cas contraire
+    # @return [File, False] Le fichier de destination si ok, false dans le cas contraire
     def open_destination_file
       puts "Trying to open destination file @#{destination_path}." if verbose
       begin
@@ -100,7 +94,9 @@ module Raindrops
       end
     end
 
-    # Ferme le fichier de destination
+    # Ferme le fichier passé en paramètre.
+    #
+    # @params [File] file Fichier à fermer
     def close_destination_file(file)
       file.close
       puts 'Destination file closed' if verbose
