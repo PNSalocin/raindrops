@@ -7,15 +7,15 @@ require "raindrops/version"
 Gem::Specification.new do |s|
   s.name        = "raindrops"
   s.version     = Raindrops::VERSION
-  s.authors     = [""]
-  s.email       = [""]
-  s.homepage    = ""
-  s.summary     = "Summary of Raindrops."
-  s.description = "Description of Raindrops."
+  s.authors     = ["PNSalocin"]
+  s.email       = ["nicolas.merelli@gmail.com"]
+  s.homepage    = "https://github.com/PNSalocin/raindrops"
+  s.summary     = "HTTP Download manager."
+  s.description = "HTTP Download manager with both graphical and console UI."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["test/**/*"]
+  s.test_files = Dir["spec/**/*"]
 
   s.add_development_dependency 'haml-rails', '~> 0.9'
   s.add_development_dependency 'rspec'
