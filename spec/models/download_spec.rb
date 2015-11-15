@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Raindrops::Download, type: :model do
-
   before {
     @completed_download = create :download, :completed
   }
