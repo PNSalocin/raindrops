@@ -30,13 +30,13 @@ ActiveRecord::Schema.define(version: 20151018085430) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
   create_table "raindrops_downloads", force: :cascade do |t|
-    t.string   "source_url",           limit: 255,                 null: false
-    t.string   "destination_path",     limit: 255,                 null: false
-    t.integer  "file_total_size"
-    t.integer  "file_downloaded_size"
-    t.boolean  "completed",                        default: false
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
+    t.string   "source_url",       limit: 255,             null: false
+    t.string   "destination_path", limit: 255,             null: false
+    t.integer  "file_size",                    default: 1, null: false
+    t.integer  "status",                       default: 0, null: false
+    t.string   "error_content",    limit: 250
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
   end
 
 end
