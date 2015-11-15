@@ -3,5 +3,8 @@ rvm:
   - 2.2.2
 before_install: gem install bundler -v 1.10.6
 script:
+  - bundle exec rake db:drop
+  - bundle exec rake db:create
+  - bundle exec rake db:migrate
   - bundle exec rspec
   - bundle exec rubocop
