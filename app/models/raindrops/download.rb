@@ -8,7 +8,8 @@ module Raindrops
 
     after_initialize :default_values
 
-    enum status: { unprocessed: 0, downloading: 10, completed: 20, error_opening_file: -10 }
+    enum status: { unprocessed: 0, downloading: 10, completed: 20,
+                   error_opening_destination_file: -10, error_downloading_source_file: -20 }
 
     attr_accessor :verbose
 
@@ -31,25 +32,30 @@ module Raindrops
       require 'net/http'
 
       # Requête de base de récupération du fichier
-      Net::HTTP.new(source_uri.host, source_uri.port).request_get(source_uri.path) do |response|
-        puts "File found @#{source_uri}." if verbose
+      begin
+        Net::HTTP.new(source_uri.host, source_uri.port).request_get(source_uri.path) do |response|
+          puts "File found @#{source_uri}." if verbose
 
-        get_and_update_file_size response
+          # Tentative d'ouverture du fichier de destination en vue d'ecrire les chunks reçus
+          file = open_destination_file
+          break unless file
 
-        # Tentative d'ouverture du fichier de destination en vue d'ecrire les chunks reçus
-        file = open_destination_file
-        return nil unless file
+          get_and_update_file_size response
 
-        self.update_attributes! status: Raindrops::Download.statuses[:downloading]
-        puts 'Starting download' if verbose
+          self.update_attributes! status: Raindrops::Download.statuses[:downloading]
+          puts 'Starting download' if verbose
 
-        # Récupération des données du fichier par chunks
-        response.read_body do |chunk|
-          file.write chunk
+          # Récupération des données du fichier par chunks
+          response.read_body do |chunk|
+            file.write chunk
+          end
+
+          self.update_attributes! status: Raindrops::Download.statuses[:completed]
+          close_destination_file file
         end
-
-        self.update_attributes! status: Raindrops::Download.statuses[:completed]
-        close_destination_file file
+      rescue => e
+        self.update_attributes! status: Raindrops::Download.statuses[:error_downloading_source_file],
+                                error_content: e.message
       end
     end
 
@@ -89,7 +95,8 @@ module Raindrops
         puts 'Destination file opened.' if verbose
         file
       rescue SystemCallError => e
-        self.update_attributes! status: Raindrops::Download.statuses[:error_opening_file], error_content: e.message
+        self.update_attributes! status: Raindrops::Download.statuses[:error_opening_destination_file],
+                                error_content: e.message
         false
       end
     end
