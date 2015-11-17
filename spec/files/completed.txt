@@ -1,5 +1,0 @@
-this is a completed file
-with
-many lines
-
-(size: 53o)
