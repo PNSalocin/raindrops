@@ -1,6 +1,3 @@
-require 'coveralls'
-Coveralls.wear! 'rails'
-
 require "codeclimate-test-reporter"
 CodeClimate::TestReporter.start
 

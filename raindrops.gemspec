@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'haml-rails', '~> 0.9'
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'yard'
-  s.add_development_dependency 'coveralls'
   s.add_development_dependency 'codeclimate-test-reporter'
 
   # Tests
