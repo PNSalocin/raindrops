@@ -7,7 +7,7 @@ script:
   - bundle exec rake db:create
   - bundle exec rake db:migrate
   - bundle exec rake spec
-  - bundle exec rubocop
+  - bundle exec rake rubocop
   - bundle exec rake app:brakeman:run
 addons:
   code_climate:
