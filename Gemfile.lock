@@ -66,6 +66,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    codeclimate-test-reporter (0.4.8)
+      simplecov (>= 0.7.1, < 1.0.0)
     coveralls (0.8.3)
       json (~> 1.8)
       rest-client (>= 1.6.8, < 2)
@@ -224,6 +226,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
+  codeclimate-test-reporter
   coveralls
   factory_girl_rails
   haml-rails (~> 0.9)

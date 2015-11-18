@@ -8,3 +8,6 @@ script:
   - bundle exec rake db:migrate
   - bundle exec rspec
   - bundle exec rubocop
+addons:
+  code_climate:
+    repo_token: 6a94c230ed41cef4c8559a9fee3058df43d7323ad011037f6fc0bb66f0296fb5
