@@ -6,8 +6,9 @@ script:
   - bundle exec rake db:drop
   - bundle exec rake db:create
   - bundle exec rake db:migrate
-  - bundle exec rspec
+  - bundle exec rake spec
   - bundle exec rubocop
+  - bundle exec rake app:brakeman:run
 addons:
   code_climate:
     repo_token: 6a94c230ed41cef4c8559a9fee3058df43d7323ad011037f6fc0bb66f0296fb5
