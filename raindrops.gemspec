@@ -17,11 +17,11 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_development_dependency 'haml-rails', '~> 0.9'
-  s.add_development_dependency 'rubocop'
-  s.add_development_dependency 'yard'
-  s.add_development_dependency 'codeclimate-test-reporter'
-  s.add_development_dependency 'brakeman'
+  s.add_development_dependency 'haml-rails', '~> 0.9.0'
+  s.add_development_dependency 'rubocop', '~> 0.35.1'
+  s.add_development_dependency 'yard', '~> 0.8.7'
+  s.add_development_dependency 'codeclimate-test-reporter', '~> 0.4.8'
+  s.add_development_dependency 'brakeman', '~> 3.1.2'
 
   # Tests
   s.add_development_dependency 'rspec-rails'
@@ -29,9 +29,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'factory_girl_rails'
 
   # Core
-  s.add_dependency 'rails', '~> 4.2.4'
+  s.add_dependency 'rails', '~> 4.2.5'
   s.add_dependency 'delayed_job_active_record', '~> 4.1.0'
-  s.add_dependency 'puma', '~> 2.14.0'
+  s.add_dependency 'puma', '~> 2.15.3'
 
   # DB
   s.add_dependency 'sqlite3', '~> 1.3.11'
