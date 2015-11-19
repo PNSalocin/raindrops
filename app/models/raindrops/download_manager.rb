@@ -3,46 +3,59 @@ module Raindrops
   class DownloadManager
     include ActionView::Helpers
 
-    # BOUCLE INFINIE !
-    # Gestion de évènements liés aux téléchargements (progression, ajout, suppression, complétion).
+    # Gestion des évènements liés aux téléchargements (progression, ajout, suppression, complétion).
     # Un heartbeat est envoyé périodiquement pour s'assurer de la présence du client.
     #
     # @param [SSE] sse Classe d'écriture des SSE
-    # @param [Array] events Evènements de communication. Ceux-ci peuvent-être :
-    # @option events [Symbol] :progress Notifications de progression de téléchargement
-    # @option events [Symbol] :created Notifications de création de téléchargement
-    # @option events [Symbol] :destroyed Notifications de suppression de téléchargement
-    # @option events [Symbol] :completed Notifications de complétion de téléchargement
-    def send_events(sse, events)
+    # @param [Array] events Evènements de communication.
+    #   @option events [Symbol] :progress Notifications de progression de téléchargement
+    #   @option events [Symbol] :created Notifications de création de téléchargement
+    #   @option events [Symbol] :destroyed Notifications de suppression de téléchargement
+    #   @option events [Symbol] :completed Notifications de complétion de téléchargement
+    # @param [Integer] iterations (optionnel) Nombre de fois ou la boucle de gestion d'évènements est effectuée
+    def send_events(sse, events, iterations = nil)
+      downloads = { old: Raindrops::Download.all.index_by(&:id), new: Raindrops::Download.all.index_by(&:id) }
       @sse = sse
-      downloads = Raindrops::Download.all.index_by(&:id)
-      old_downloads = downloads
 
-      loop do
-        send_heartbeat
-        send_created_events(downloads, old_downloads) if events.include? :created
-        send_destroyed_events(downloads, old_downloads) if events.include? :destroyed
-        send_completed_events(downloads, old_downloads) if events.include? :completed
-
-        20.times do
-          if events.include? :progress
-            downloads.each do |_download_id, download|
-              send_progress_events download
-            end
-          end
-
-          sleep 0.5
+      if iterations
+        iterations.times do
+          downloads = manage_events downloads, events
         end
-
-        # Un clean cache est nécessaire ici, sinon rails continue a resservir les résultats du cache,
-        # et donc ne voit pas les nouveaux téléchargements
-        ActiveRecord::Base.connection.query_cache.clear
-        old_downloads = downloads
-        downloads = Raindrops::Download.all.index_by(&:id)
+      else
+        loop do
+          downloads = manage_events downloads, events
+        end
       end
     end
 
     private
+
+    # Gestion des évènements liés aux téléchargements (progression, ajout, suppression, complétion).
+    # Un heartbeat est envoyé périodiquement pour s'assurer de la présence du client.
+    #
+    # @param [Array] downloads Etat des anciens et des nouveaux téléchargements
+    # @return [Hash] Etat des anciens et des nouveaux téléchargements après envoi des évènements
+    def manage_events(downloads, events)
+      send_heartbeat
+      send_created_events(downloads[:new], downloads[:old]) if events.include? :created
+      send_destroyed_events(downloads[:new], downloads[:old]) if events.include? :destroyed
+      send_completed_events(downloads[:new], downloads[:old]) if events.include? :completed
+
+      20.times do
+        if events.include? :progress
+          downloads[:new].each do |_download_id, download|
+            send_progress_events download
+          end
+        end
+
+        sleep 0.5
+      end
+
+      # Un clean cache est nécessaire ici, sinon rails continue a resservir les résultats du cache,
+      # et donc ne voit pas les nouveaux téléchargements
+      ActiveRecord::Base.connection.query_cache.clear
+      { old: downloads[:new], new: Raindrops::Download.all.index_by(&:id) }
+    end
 
     # Envoie un heartbeat pour s'assurer que le client est toujours à l'écoute des notifications
     def send_heartbeat
