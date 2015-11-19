@@ -11,7 +11,7 @@ module Raindrops
     enum status: { unprocessed: 0, downloading: 10, completed: 20,
                    error_opening_destination_file: -10, error_downloading_source_file: -20 }
 
-    # @param [Boolean] true pour afficher les logs, false dans le cas contraire
+    # @return [Boolean] true pour afficher les logs, false dans le cas contraire
     attr_accessor :verbose
 
     # Retourne le nombre d'octets téléchargés du fichier.
@@ -104,7 +104,7 @@ module Raindrops
 
     # Ferme le fichier passé en paramètre.
     #
-    # @params [File] file Fichier à fermer
+    # @param [File] file Fichier à fermer
     def close_destination_file(file)
       file.close
       puts 'Destination file closed' if verbose
