@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe Raindrops::Download, type: :model do
-  subject(:download_completed) { create :models, :completed }
-  subject(:download_unprocessed) { create :models }
-  subject(:download_uncompleted) { create :models, :uncompleted }
-  subject(:download_with_invalid_destination_path) { create :models, :with_invalid_destination_path }
-  subject(:download_with_invalid_source_url) { create :models, :with_invalid_source_url }
+  subject(:download_completed) { create :download, :completed }
+  subject(:download_unprocessed) { create :download }
+  subject(:download_uncompleted) { create :download, :uncompleted }
+  subject(:download_with_invalid_destination_path) { create :download, :with_invalid_destination_path }
+  subject(:download_with_invalid_source_url) { create :download, :with_invalid_source_url }
 
   it 'has valid factories' do
-    expect(build(:models, :completed)).to be_valid
+    expect(build(:download, :completed)).to be_valid
   end
 
   context '.bytes_downloaded' do

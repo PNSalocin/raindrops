@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :models, class: 'Raindrops::Download' do
+  factory :download, class: 'Raindrops::Download' do
     destination_path "#{Raindrops::Support::Utils.rails_true_root}/spec/files/to_download.zip"
     source_url 'http://ipv4.download.thinkbroadband.com/5MB.zip'
     status Raindrops::Download.statuses[:unprocessed]
