@@ -1,6 +1,7 @@
 .yardoc/
 .idea/
 doc/
+tmp/
 coverage/
 
 spec/dummy/tmp/
