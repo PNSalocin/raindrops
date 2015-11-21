@@ -13,13 +13,13 @@ describe Raindrops::Download, type: :model do
 
   context '.bytes_downloaded' do
     context 'with valid path' do
-      it 'return correct file size' do
+      it 'returns correct file size' do
         expect(download_completed.bytes_downloaded).to eq 449
       end
     end
 
     context 'with invalid path' do
-      it 'return a file size of 0' do
+      it 'returns a file size of 0' do
         expect(download_with_invalid_destination_path.bytes_downloaded).to eq 0
       end
     end
@@ -27,19 +27,19 @@ describe Raindrops::Download, type: :model do
 
   context '.progress' do
     context 'with completed download' do
-      it 'return correct progress' do
+      it 'returns correct progress' do
         expect(download_completed.progress).to eq 100.0
       end
     end
 
     context 'with uncompleted download' do
-      it 'return correct progress' do
+      it 'returns correct progress' do
         expect(download_uncompleted.progress).to eq 51.31
       end
     end
 
     context 'with invalid download' do
-      it 'return a progress of 0' do
+      it 'returns a progress of 0' do
         expect(download_with_invalid_destination_path.progress).to eq 0
       end
     end
@@ -48,7 +48,7 @@ describe Raindrops::Download, type: :model do
   context '.download' do
     context 'with valid url' do
       context 'and valid path' do
-        it 'download file' do
+        it 'downloads file' do
           download_unprocessed.start
           expect(File.exist? download_unprocessed.destination_path).to eq true
           expect(File.size download_unprocessed.destination_path).to eq 5_242_880
