@@ -41,7 +41,7 @@ module Raindrops
       send_destroyed_events(downloads[:new], downloads[:old]) if events.include? :destroyed
       send_completed_events(downloads[:new], downloads[:old]) if events.include? :completed
 
-      20.times do
+      5.times do
         if events.include? :progress
           downloads[:new].each do |_download_id, download|
             send_progress_events download

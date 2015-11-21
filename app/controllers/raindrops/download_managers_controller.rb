@@ -1,6 +1,6 @@
 module Raindrops
   # Controlleur de gestion des évènements associés aux téléchargements
-  class DownloadManagerController < ApplicationController
+  class DownloadManagersController < ApplicationController
     include ActionController::Live
 
     # Envoie les différentes notifications associées aux téléchargements.
