@@ -3,27 +3,38 @@ module Raindrops
   class DownloadManager
     include ActionView::Helpers
 
-    # Gestion des évènements liés aux téléchargements (progression, ajout, suppression, complétion).
-    # Un heartbeat est envoyé périodiquement pour s'assurer de la présence du client.
+    # Evènements par défaut (tout les évènements) pour l'envoi des évènements
+    DEFAULT_EVENTS = [:progress, :created, :destroyed, :completed]
+
+    # Constructeur.
+    # Assignation du canal d'écriture des SSE et éventuellement des canaux d'évenements
+    # auquel l'utilisateur souhaite d'abonner.
     #
     # @param [SSE] sse Classe d'écriture des SSE
-    # @param [Array] events Evènements de communication.
+    # @param [Array] events (optionnel) Evènements de communication (par défaut, tous)
     #   @option events [Symbol] :progress Notifications de progression de téléchargement
     #   @option events [Symbol] :created Notifications de création de téléchargement
     #   @option events [Symbol] :destroyed Notifications de suppression de téléchargement
     #   @option events [Symbol] :completed Notifications de complétion de téléchargement
-    # @param [Integer] iterations (optionnel) Nombre de fois ou la boucle de gestion d'évènements est effectuée
-    def send_events(sse, events, iterations = nil)
-      downloads = { old: Raindrops::Download.all.index_by(&:id), new: Raindrops::Download.all.index_by(&:id) }
+    def initialize(sse, events = DEFAULT_EVENTS)
       @sse = sse
+      @events = events
+    end
+
+    # Gestion des évènements liés aux téléchargements (progression, ajout, suppression, complétion).
+    # Un heartbeat est envoyé périodiquement pour s'assurer de la présence du client.
+    #
+    # @param [Integer] iterations (optionnel) Nombre de fois ou la boucle de gestion d'évènements est effectuée
+    def send_events(iterations = nil)
+      downloads = { old: Raindrops::Download.all.index_by(&:id), new: Raindrops::Download.all.index_by(&:id) }
 
       if iterations
         iterations.times do
-          downloads = manage_events downloads, events
+          downloads = manage_events downloads
         end
       else
         loop do
-          downloads = manage_events downloads, events
+          downloads = manage_events downloads
         end
       end
     end
@@ -35,14 +46,14 @@ module Raindrops
     #
     # @param [Array] downloads Etat des anciens et des nouveaux téléchargements
     # @return [Hash] Etat des anciens et des nouveaux téléchargements après envoi des évènements
-    def manage_events(downloads, events)
+    def manage_events(downloads)
       send_heartbeat
-      send_created_events(downloads[:new], downloads[:old]) if events.include? :created
-      send_destroyed_events(downloads[:new], downloads[:old]) if events.include? :destroyed
-      send_completed_events(downloads[:new], downloads[:old]) if events.include? :completed
+      send_created_events(downloads[:new], downloads[:old]) if @events.include? :created
+      send_destroyed_events(downloads[:new], downloads[:old]) if @events.include? :destroyed
+      send_completed_events(downloads[:new], downloads[:old]) if @events.include? :completed
 
       5.times do
-        if events.include? :progress
+        if @events.include? :progress
           downloads[:new].each do |_download_id, download|
             send_progress_events download
           end
