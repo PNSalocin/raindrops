@@ -2,6 +2,12 @@ module Raindrops #:nodoc:
   class Engine < ::Rails::Engine #:nodoc:
     isolate_namespace Raindrops
 
+    require 'haml'
+    require 'bootstrap-sass'
+    require 'jquery-rails'
+    require 'bootstrap-sass'
+    require 'sass-rails'
+
     initializer 'raindrops' do |app|
       app.config.cache_store = :memory_store, { size: 8.megabytes }
       # Nécessaire pour PUMA pour paralleliser les appels
