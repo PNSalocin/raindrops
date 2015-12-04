@@ -42,4 +42,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-rails', '~> 4.0.5'
   s.add_dependency 'bootstrap-sass', '~> 3.3.5'
   s.add_dependency 'sass-rails', '>= 3.2'
+  s.add_dependency 'coffee-rails'
 end
