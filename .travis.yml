@@ -1,7 +1,12 @@
 language: ruby
 rvm:
-  - 2.2.2
+  - 2.1
+  - 2.2
+sudo: false
+cache: bundler
+
 before_install: gem install bundler -v 1.10.6
+before script: bundle update
 script:
   - bundle exec rake db:drop
   - bundle exec rake db:create
@@ -9,6 +14,7 @@ script:
   - bundle exec rake spec
   - bundle exec rake rubocop
   - bundle exec rake app:brakeman:run
+
 addons:
   code_climate:
     repo_token: 6a94c230ed41cef4c8559a9fee3058df43d7323ad011037f6fc0bb66f0296fb5
