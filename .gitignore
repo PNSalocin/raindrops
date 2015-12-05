@@ -1,8 +1,10 @@
 .yardoc/
 .idea/
+.bundle/
 doc/
 tmp/
 coverage/
+vendor/
 
 spec/dummy/tmp/
 spec/dummy/db/*.sqlite3
