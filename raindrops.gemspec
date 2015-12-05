@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   # Tests
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'capybara'
-  s.add_development_dependency 'selenium-webdriver'
+  s.add_dependency 'selenium-webdriver'
   s.add_development_dependency 'factory_girl_rails'
 
   # Core
