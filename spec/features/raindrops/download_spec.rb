@@ -1,13 +1,11 @@
 require 'spec_helper'
 
 feature 'test', download: true, js: true do
-
   background {
     visit '/raindrops'
   }
 
   scenario 'truc' do
-    sleep 100
-    expect(true).to eq true
+    expect(page).to have_content "Raindrops #{Raindrops::VERSION}"
   end
 end
