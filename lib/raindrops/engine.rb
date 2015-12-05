@@ -7,7 +7,7 @@ module Raindrops #:nodoc:
     require 'jquery-rails'
     require 'bootstrap-sass'
     require 'sass-rails'
-	require 'coffee-rails'
+    require 'coffee-rails'
 
     initializer 'raindrops' do |app|
       app.config.cache_store = :memory_store, { size: 8.megabytes }

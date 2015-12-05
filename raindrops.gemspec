@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_development_dependency 'haml-rails', '~> 0.9.0'
   s.add_development_dependency 'rubocop', '~> 0.35.1'
   s.add_development_dependency 'yard', '~> 0.8.7'
   s.add_development_dependency 'codeclimate-test-reporter', '~> 0.4.8'
@@ -38,9 +37,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'sqlite3', '~> 1.3.11'
 
   # Vues
-  s.add_dependency 'haml', '~> 4.0.7'
-  s.add_dependency 'jquery-rails', '~> 4.0.5'
+  s.add_dependency 'haml-rails', '~> 0.9.0'
+  s.add_dependency 'sass-rails', '~> 5.0.4'
   s.add_dependency 'bootstrap-sass', '~> 3.3.5'
-  s.add_dependency 'sass-rails', '>= 3.2'
-  s.add_dependency 'coffee-rails'
+  s.add_dependency 'coffee-rails', '~> 4.1.0'
+  s.add_dependency 'jquery-rails', '~> 4.0.5'
 end
