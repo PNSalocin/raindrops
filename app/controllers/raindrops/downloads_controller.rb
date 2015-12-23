@@ -19,14 +19,13 @@ module Raindrops
     def create
       @download.destination_path = "/home/nicolas/Bureau/#{SecureRandom.hex}.zip"
 
-      if @download.valid?
-        download = Raindrops::Download.new source_url: @download.source_url,
-                                           destination_path: @download.destination_path
-        download.save
-        download.delay.start
+      if @download.save
+        Raindrops::DownloadStartJob.perform_later @download
+        render status: :ok
+      else
+        render status: :bad_request
       end
     end
-
     # Efface un téléchargement
     #
     # @route [DELETE] /download/:id
