@@ -25,9 +25,8 @@ ActiveRecord::Schema.define(version: 20151018085430) do
     t.string   "queue"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
-
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
   create_table "raindrops_downloads", force: :cascade do |t|
     t.string   "source_url",       limit: 255,             null: false

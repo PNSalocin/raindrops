@@ -6,30 +6,25 @@ module Raindrops
     before_action :set_download, only: [:index, :create]
     before_action :set_downloads, only: [:index, :create]
 
-    # Affiche la liste des téléchargements en cours, ainsi que le formulaire de téléchargement.
+    # Retourne la liste des téléchargements
     #
     # @route [GET] /downloads
     def index
-      respond_to do |format|
-        format.html
-        format.json
-      end
+      render json: @downloads
     end
 
     # Ajoute un téléchargement.
     #
     # @route [POST] /downloads
     def create
-      # @todo Retirer cette constante en dur
       @download.destination_path = "/home/nicolas/Bureau/#{SecureRandom.hex}.zip"
+
       if @download.valid?
         download = Raindrops::Download.new source_url: @download.source_url,
                                            destination_path: @download.destination_path
         download.save
         download.delay.start
       end
-
-      render :index
     end
 
     # Efface un téléchargement

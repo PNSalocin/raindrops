@@ -1,8 +1,0 @@
-= form_for @download, class: 'form-horizontal' do |form|
-
-  .form-group
-    = form.label :source_url, t('raindrops.activerecord.attributes.raindrops/download.source_url'), class: 'control-label'
-    = form.url_field :source_url, class: 'form-control', placeholder: t('raindrops.activerecord.attributes.raindrops/download.source_url')
-
-  .form-group
-    = form.submit t('.submit'), class: 'pull-right btn btn-success'

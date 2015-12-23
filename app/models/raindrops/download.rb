@@ -2,6 +2,8 @@ module Raindrops
   # Modèle identifiant un téléchargement planifié, en cours ou terminé.
   class Download < ActiveRecord::Base
 
+    default_scope { order 'created_at DESC' }
+
     validates :source_url, presence: true
     validates :source_url, format: { with: URI.regexp }, if: proc { |a| a.source_url.present? }
     validates :destination_path, presence: true

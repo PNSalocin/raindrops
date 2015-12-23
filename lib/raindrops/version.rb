@@ -1,3 +1,3 @@
-module Raindrops #:nodoc:
-  VERSION = '0.0.2dev' #:nodoc:
+module Raindrops
+  VERSION = '0.1.0'
 end

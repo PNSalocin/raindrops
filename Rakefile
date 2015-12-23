@@ -1,4 +1,3 @@
-#!/usr/bin/env rake
 begin
   require 'bundler/setup'
 rescue LoadError
@@ -8,9 +7,11 @@ end
 APP_RAKEFILE = File.expand_path("../spec/dummy/Rakefile", __FILE__)
 load 'rails/tasks/engine.rake'
 
-Bundler::GemHelper.install_tasks
+load 'rails/tasks/statistics.rake'
 
 Dir[File.join(File.dirname(__FILE__), 'tasks/**/*.rake')].each {|f| load f }
+
+Bundler::GemHelper.install_tasks
 
 require 'rspec/core'
 require 'rspec/core/rake_task'
@@ -26,3 +27,5 @@ YARD::Rake::YardocTask.new do |t|
   t.options += ['--tag', 'route:"ROUTE"']
   t.stats_options = ['--list-undoc']
 end
+
+require 'active_model_serializers'

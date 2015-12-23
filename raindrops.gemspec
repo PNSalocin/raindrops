@@ -17,29 +17,19 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_development_dependency 'rubocop', '~> 0.35.1'
-  s.add_development_dependency 'yard', '~> 0.8.7'
-  s.add_development_dependency 'codeclimate-test-reporter', '~> 0.4.8'
-  s.add_development_dependency 'brakeman', '~> 3.1.2'
-
-  # Tests
+  # CI
+  s.add_development_dependency 'codeclimate-test-reporter'
   s.add_development_dependency 'rspec-rails'
-  s.add_development_dependency 'capybara'
-  s.add_dependency 'selenium-webdriver'
-  s.add_development_dependency 'factory_girl_rails'
+  s.add_development_dependency 'brakeman'
+  s.add_development_dependency 'rubocop'
+  s.add_development_dependency 'yard'
 
   # Core
-  s.add_dependency 'rails', '~> 4.2.5'
-  s.add_dependency 'delayed_job_active_record', '~> 4.1.0'
-  s.add_dependency 'puma', '~> 2.15.3'
+  s.add_dependency 'active_model_serializers', '>= 0.10.0.rc3'
+  #s.add_dependency 'delayed_job_active_record', '~> 4.1.0'
+  s.add_dependency 'rails'
+  s.add_dependency 'puma'
 
   # DB
-  s.add_dependency 'sqlite3', '~> 1.3.11'
-
-  # Vues
-  s.add_dependency 'haml-rails', '~> 0.9.0'
-  s.add_dependency 'sass-rails', '~> 5.0.4'
-  s.add_dependency 'bootstrap-sass', '~> 3.3.5'
-  s.add_dependency 'coffee-rails', '~> 4.1.0'
-  s.add_dependency 'jquery-rails', '~> 4.0.5'
+  s.add_dependency 'sqlite3'
 end
