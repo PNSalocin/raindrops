@@ -14,8 +14,6 @@ Rails.backtrace_cleaner.remove_silencers!
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 require 'factory_girl_rails'
-require 'capybara'
-require 'selenium-webdriver'
 
 Rails.backtrace_cleaner.remove_silencers!
 
@@ -26,13 +24,4 @@ RSpec.configure do |config|
 
   config.include FactoryGirl::Syntax::Methods
   config.include Raindrops::Support::Utils
-end
-
-Capybara.register_driver :selenium do |app|
-  custom_profile = ::Selenium::WebDriver::Firefox::Profile.new
-
-  # Turn off the super annoying popup!
-  custom_profile["network.http.prompt-temp-redirect"] = false
-
-  ::Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => custom_profile)
 end
