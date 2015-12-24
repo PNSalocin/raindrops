@@ -3,7 +3,6 @@ module Raindrops
     isolate_namespace Raindrops
     config.generators.api_only = true
 
-    # Inclusion implicite des gems utilisés dans l'engine
-    require 'active_model_serializers'
+    config.active_job.queue_adapter = :sidekiq
   end
 end

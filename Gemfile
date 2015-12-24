@@ -13,9 +13,5 @@ gemspec
 # Your gem is dependent on dev or edge Rails. Once you can lock this
 # dependency down to a specific version, move it to your gemspec.
 gem 'rails', github: "rails/rails"
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
-# To use a debugger
-gem 'byebug', group: [:development, :test]
 # ActiveModel::Serializer implementation and Rails hooks
 gem 'active_model_serializers', '>= 0.10.0.rc3'

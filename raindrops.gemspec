@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
 
   # Core
   s.add_dependency 'active_model_serializers', '>= 0.10.0.rc3'
-  #s.add_dependency 'delayed_job_active_record', '~> 4.1.0'
+  s.add_dependency 'sidekiq'
   s.add_dependency 'rails'
   s.add_dependency 'puma'
 
