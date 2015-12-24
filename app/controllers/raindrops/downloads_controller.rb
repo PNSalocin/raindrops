@@ -23,6 +23,7 @@ module Raindrops
       Raindrops::DownloadStartJob.perform_later @download
       render status: :ok
     end
+
     # Efface un téléchargement
     #
     # @route [DELETE] /download/:id

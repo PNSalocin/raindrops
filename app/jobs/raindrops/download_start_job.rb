@@ -1,4 +1,5 @@
 module Raindrops
+  # Gère le lancement des téléchargements
   class DownloadStartJob < ApplicationJob
     queue_as :default
 

@@ -28,7 +28,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'active_model_serializers', '>= 0.10.0.rc3'
   s.add_dependency 'sidekiq'
   s.add_dependency 'rails'
-  s.add_dependency 'puma'
 
   # DB
   s.add_dependency 'sqlite3'
