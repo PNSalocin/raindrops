@@ -12,6 +12,6 @@ gemspec
 
 # Your gem is dependent on dev or edge Rails. Once you can lock this
 # dependency down to a specific version, move it to your gemspec.
-gem 'rails', github: "rails/rails"
+gem 'rails', github: 'rails/rails'
 # ActiveModel::Serializer implementation and Rails hooks
 gem 'active_model_serializers', '>= 0.10.0.rc3'
