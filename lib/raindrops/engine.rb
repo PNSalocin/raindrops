@@ -1,4 +1,5 @@
 module Raindrops
+  # Configuration de l'engine
   class Engine < ::Rails::Engine
     isolate_namespace Raindrops
     config.generators.api_only = true
