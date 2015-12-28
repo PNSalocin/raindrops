@@ -1,0 +1,18 @@
+fr:
+  raindrops:
+    activerecord:
+      attributes:
+        raindrops/download:
+          source_url: URL source
+          destination_path: Chemin de destination
+          file_size: Taille du fichier
+          completed: Terminé?
+          progress: Progression
+          status: Statut
+
+  activerecord:
+    errors:
+      messages:
+        blank: doit être rempli(e)
+        invalid: n'est pas valide
+        record_invalid: "La validation a échoué : %{errors}"
