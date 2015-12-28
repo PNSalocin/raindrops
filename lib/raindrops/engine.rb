@@ -2,9 +2,6 @@ module Raindrops
   # Configuration de l'engine
   class Engine < ::Rails::Engine
     isolate_namespace Raindrops
-    config.generators.api_only = true
-
-    config.active_job.queue_adapter = :sidekiq
 
     # Inclusion implicite des modules utilisés par l'engine
     require 'active_model_serializers'
@@ -15,9 +12,12 @@ module Raindrops
 
       app.config.i18n.load_path += Dir["#{config.root}/config/locales/raindrops/*.yml"]
       app.config.i18n.default_locale = :fr
+
+      app.config.active_job.queue_adapter = :sidekiq
     end
 
     config.generators do |g|
+      g.api_only = true
       g.test_framework :rspec, fixture: false
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
       g.assets false
