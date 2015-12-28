@@ -1,13 +1,21 @@
 language: ruby
+
+sudo: false
+
+cache: bundler
+
 rvm:
   - 2.2.2
 
-sudo: false
-#cache: bundler
+services:
+  - redis-server
 
-before_install: gem install bundler -v 1.10.6
+before_install:
+  - gem install bundler -v 1.10.6
+
 before script:
   - bundle update
+
 script:
   - bundle exec rake db:drop
   - bundle exec rake db:create
