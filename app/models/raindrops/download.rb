@@ -10,6 +10,11 @@ module Raindrops
 
     after_initialize :default_values
 
+    # Callbacks associés à ActionCable
+    after_create :ac_after_create
+    after_destroy :ac_after_destroy
+    set_callback :save, :after, :ac_after_completion, if: -> { self.status_changed? && self.completed? }
+
     enum status: { unprocessed: 0, downloading: 10, completed: 20,
                    error_opening_destination_file: -10, error_downloading_source_file: -20 }
 
@@ -110,6 +115,21 @@ module Raindrops
     def close_destination_file(file)
       file.close
       puts 'Destination file closed' if verbose
+    end
+
+    # Broadcast un évènement de création de téléchargement
+    def ac_after_create
+      ActionCable.server.broadcast 'download_created', id: id
+    end
+
+    # Broadcast un évènement d'éffacement d'un téléchargement
+    def ac_after_destroy
+      ActionCable.server.broadcast 'download_destroyed', id: id
+    end
+
+    # Broadcast un évènement de complétion d'un téléchargement
+    def ac_after_completion
+      ActionCable.server.broadcast 'download_completed', id: id
     end
   end
 end
