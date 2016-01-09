@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/rails/rails.git
-  revision: fefd76e82af28decb895c22bbe1bbf265a2a8b75
+  revision: b588653ac0ce12b8caf448b3a08cb099db8ac356
   specs:
     actioncable (5.0.0.beta1)
       actionpack (= 5.0.0.beta1)
@@ -34,7 +34,6 @@ GIT
       globalid (>= 0.3.6)
     activemodel (5.0.0.beta1)
       activesupport (= 5.0.0.beta1)
-      builder (~> 3.1)
     activerecord (5.0.0.beta1)
       activemodel (= 5.0.0.beta1)
       activesupport (= 5.0.0.beta1)
@@ -213,10 +212,9 @@ GEM
     safe_yaml (1.0.4)
     sass (3.4.20)
     sexp_processor (4.6.0)
-    sidekiq (4.0.1)
+    sidekiq (4.0.2)
       concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
-      json (~> 1.0)
       redis (~> 3.2, >= 3.2.1)
     simplecov (0.11.1)
       docile (~> 1.1.0)
@@ -238,7 +236,7 @@ GEM
     terminal-table (1.5.2)
     thor (0.19.1)
     thread_safe (0.3.5)
-    tilt (2.0.1)
+    tilt (2.0.2)
     timers (4.1.1)
       hitimes
     tins (1.6.0)
